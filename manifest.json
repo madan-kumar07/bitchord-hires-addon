@@ -1,0 +1,20 @@
+{
+  "id": "dev.akira.bitchord-hires",
+  "name": "Tamil Hi-Res FLAC",
+  "version": "1.0.1",
+  "resources": ["search", "stream"],
+  "checkValidLossless": 1,
+  "allowDownloads": 1,
+  "settings": [
+    {
+      "key": "quality",
+      "type": "select",
+      "default": "lossless",
+      "options": [
+        { "label": "Hi-Res FLAC (up to 24-bit / 192 kHz)", "value": "lossless" },
+        { "label": "CD Lossless FLAC (16-bit / 44.1 kHz)", "value": "high" },
+        { "label": "Low (MP3 320)", "value": "low" }
+      ]
+    }
+  ]
+}
