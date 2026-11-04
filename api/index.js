@@ -2,12 +2,11 @@ import { searchAll, resolveStream, health } from '../lib/router.js';
 
 const MANIFEST = {
   id: 'dev.akira.bitchord-hires',
-  name: 'juanjob hi res',
-  version: '1.0.0',
+  name: 'Tamil Hi-Res FLAC',
+  version: '1.0.1',
   resources: ['search', 'stream'],
-  // Only offer this addon while the phone has a lossless-capable output.
+  // Follow the README: only show this addon for lossless-capable outputs.
   checkValidLossless: 1,
-  // Downloads enabled: BitChord can save the lossless file from this addon.
   allowDownloads: 1,
   settings: [
     {
@@ -15,18 +14,9 @@ const MANIFEST = {
       type: 'select',
       default: 'lossless',
       options: [
-        { label: 'Lossless (FLAC, up to 24/192)', value: 'lossless' },
-        { label: 'High (FLAC, up to 24/96)', value: 'high' },
-        { label: 'Low (data saver)', value: 'low' },
-      ],
-    },
-    {
-      key: 'atmos',
-      type: 'select',
-      default: 'stereo',
-      options: [
-        { label: 'Stereo only', value: 'stereo' },
-        { label: 'Dolby Atmos when available', value: 'auto' },
+        { label: 'Hi-Res FLAC (up to 24-bit / 192 kHz)', value: 'lossless' },
+        { label: 'CD Lossless FLAC (16-bit / 44.1 kHz)', value: 'high' },
+        { label: 'Low (MP3 320)', value: 'low' },
       ],
     },
   ],
@@ -46,7 +36,11 @@ function json(res, status, body, extraHeaders = {}) {
 
 export default async function handler(req, res) {
   const url = new URL(req.url, 'http://localhost');
-  const path = url.pathname.replace(/\/+$/, '') || '/';
+
+  // Vercel rewrites public addon paths to this function. Preserve the original
+  // path in __path so the router still sees /manifest.json, /health, etc.
+  const forwardedPath = url.searchParams.get('__path');
+  const path = (forwardedPath || url.pathname).replace(/\\/+$/, '') || '/';
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204, {
