@@ -77,7 +77,7 @@ Tocá *Test* para el health check.
 
 - `checkValidLossless: 1` — el addon solo se consulta con una salida capaz de lossless (cable, USB, HDMI, o BT LDAC/LHDC/aptX Lossless). Con BT normal no se le habla. En la lista aparece *Needs a lossless output*.
 - `allowDownloads: 1` — las descargas salen de este addon, así que se guardan en FLAC. Solo funciona para pistas que existan en Qobuz; si el addon devuelve 404, BitChord cae a la siguiente fuente.
-- `settings.quality` — `lossless` / `high` / `low`. BitChord reenvía el valor elegido en `/search` y `/stream`.
+- `settings.quality` — `lossless` / `high` / `low`. En este addon, `lossless` pide Hi-Res (Qobuz `HI_RES`), `high` pide calidad CD (Qobuz `LOSSLESS`) y `low` pide MP3 320 (Qobuz `LOW`). BitChord reenvía el valor elegido en `/search` y `/stream`.
 
 ---
 
@@ -111,9 +111,11 @@ El addon pide hi-res a soundfean y devuelve el mejor disponible:
 
 | Calidad | Resultado |
 |---|---|
-| `HI_RES` | FLAC 24-bit (hasta 192 kHz) |
-| `LOSSLESS` | FLAC 16/44.1 (CD) |
-| `LOW` | MP3 320 |
+| Opción en BitChord | Valor enviado al upstream | Resultado |
+|---|---|---|
+| `lossless` (Hi-Res) | `HI_RES` | FLAC 24-bit (hasta 192 kHz) |
+| `high` (CD Lossless) | `LOSSLESS` | FLAC 16/44.1 (CD) |
+| `low` | `LOW` | MP3 320 |
 
 ---
 
