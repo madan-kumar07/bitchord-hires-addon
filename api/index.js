@@ -40,7 +40,7 @@ export default async function handler(req, res) {
   // Vercel rewrites public addon paths to this function. Preserve the original
   // path in __path so the router still sees /manifest.json, /health, etc.
   const forwardedPath = url.searchParams.get('__path');
-  const path = (forwardedPath || url.pathname).replace(/\\/+$/, '') || '/';
+  const path = forwardedPath || url.pathname || '/';
 
   if (req.method === 'OPTIONS') {
     res.writeHead(204, {
